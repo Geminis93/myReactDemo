@@ -1,0 +1,28 @@
+.style {
+
+  &-enter {
+    opacity: 0.01;
+    background: #000;
+    color: #FFF;
+
+    &-active {
+      opacity: 1;
+      background: #000;
+      color: #FFF;
+      transition: all 0.5s ease-out;
+    }
+  }
+
+  &-exit {
+    opacity: 1;
+    background: #000;
+    color: #FFF;
+
+    &-active {
+      opacity: 0.01;
+      background: #000;
+      color: #FFF;
+      transition: all 0.5s ease-out;
+    }
+  }
+}
