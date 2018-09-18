@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 import Echarts from 'echarts';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import LineConfig from './LineConfig';
 import './index.scss';
 
 class CommonCharts extends Component {
-  componentDidMount() {
-    const myChart = Echarts.init(this.commonRef);
+  state = {
+    myChart: null
+  }
 
-    myChart.setOption({
-      title: { text: 'ECharts 入门示例' },
-      tooltip: {},
-      xAxis: {
-        data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-      },
-      yAxis: {},
-      series: [{
-        name: '销量',
-        type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
-      }]
+  componentDidMount() {
+    const { type, options } = this.props;
+    const myChart = Echarts.init(this.commonRef);
+    let newOption = null;
+    switch (type) {
+      case 'line':
+        newOption = _.merge({}, LineConfig, options);
+        break;
+      default:
+        break;
+    }
+
+    myChart.setOption(newOption);
+
+    this.setState({
+      myChart: myChart
     })
   }
 
@@ -26,7 +33,9 @@ class CommonCharts extends Component {
     const { height } = this.props;
     return (
       <div>
-        <div style={{ 'height': `${parseInt(height, 10)}px` }} className="common-chart" ref={refs => this.commonRef = refs}></div>
+        <div
+          style={{ 'height': `${parseInt(height, 10)}px` }}
+          ref={refs => this.commonRef = refs}></div>
       </div>
     );
   }
@@ -35,11 +44,13 @@ class CommonCharts extends Component {
 CommonCharts.propTypes = {
   type: PropTypes.string,
   height: PropTypes.string,
+  options: PropTypes.object,
 };
 
 CommonCharts.defaultProps = {
   type: 'line',
   height: 300,
+  options: null,
 };
 
 export default CommonCharts;
