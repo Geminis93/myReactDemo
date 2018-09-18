@@ -4,6 +4,7 @@ import {
   CSSTransition,
   TransitionGroup,
 } from 'react-transition-group';
+import { Motion, spring } from 'react-motion';
 import './index.scss';
 
 class Transition extends Component {
@@ -45,12 +46,31 @@ class Transition extends Component {
                   key={item.id}
                   timeout={1000}
                   classNames="style">
-                  <li key={item.id}>{ item.name }</li>
+                  <li key={item.id}>{item.name}</li>
                 </CSSTransition>
               ))
             }
           </TransitionGroup>
         </ul>
+
+        <h3>Animate.css</h3>
+        <div>
+          <div className="animated fadeInLeftBig" style={{ 'background': '#CCC' }}>aaaaa</div>
+        </div>
+
+        <h3>React Motion</h3>
+        <div style={{'position': 'relative'}}>
+        <Motion defaultStyle={{x: 0, w: 1000}} style={{x: spring(1000), w: spring(200)}}>
+          {value => <div style={{
+            width: `${value.w}px`,
+            textAlign: 'right',
+            background: '#CCC',
+            position: 'absolute',
+            top: 0,
+            left: `${value.x}px`
+          }}>{value.x}</div>}
+        </Motion>
+        </div>
       </div>
     );
   }
