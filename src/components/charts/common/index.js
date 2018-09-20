@@ -11,16 +11,9 @@ class CommonCharts extends Component {
   }
 
   componentDidMount() {
-    const { type, options } = this.props;
+    const { options } = this.props;
     const myChart = Echarts.init(this.commonRef);
-    let newOption = null;
-    switch (type) {
-      case 'line':
-        newOption = _.merge({}, LineConfig, options);
-        break;
-      default:
-        break;
-    }
+    const newOption = _.merge({}, LineConfig, options);
 
     myChart.setOption(newOption);
 
@@ -42,13 +35,11 @@ class CommonCharts extends Component {
 };
 
 CommonCharts.propTypes = {
-  type: PropTypes.string,
   height: PropTypes.string,
   options: PropTypes.object,
 };
 
 CommonCharts.defaultProps = {
-  type: 'line',
   height: 300,
   options: null,
 };

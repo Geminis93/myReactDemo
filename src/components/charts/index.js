@@ -5,6 +5,9 @@ import './index.scss';
 class DemoCharts extends Component {
   render() {
     const option = {
+      legend: {
+        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+      },
       series: [
         {
           name: '邮件营销',
@@ -29,9 +32,7 @@ class DemoCharts extends Component {
         },
         {
           name: '直接访问',
-          type: 'line',
-          stack: '总量',
-          areaStyle: { normal: {} },
+          type: 'bar',
           data: [320, 332, 301, 334, 390, 330, 320]
         },
         {
