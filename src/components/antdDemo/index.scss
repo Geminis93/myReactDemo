@@ -1,0 +1,12 @@
+.antd-demo {
+
+  & .ant-layout-header {
+    background: #eee;
+    color: #3a3939;
+    display: flex;
+
+    & > div, & > ul {
+      flex: 1;
+    }
+  }
+}
