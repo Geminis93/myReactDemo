@@ -8,5 +8,13 @@
     & > div, & > ul {
       flex: 1;
     }
+
+    & > ul {
+      display: flex;
+
+      & > li {
+        width: 200px;
+      }
+    }
   }
 }

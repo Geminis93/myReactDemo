@@ -61,8 +61,19 @@ const router = [
     ]
   },
   {
-    title: 'Data',
-    children: [],
+    title: 'Test',
+    children: [
+      {
+        title: 'Fall Flat',
+        name: 'fallflat',
+        path: '/app/Text/fallflat',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/fallFlat'),
+          loading: Loading,
+        }),
+      },
+    ],
   },
   {
     title: 'Info',
