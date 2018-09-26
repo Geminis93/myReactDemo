@@ -73,6 +73,26 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'Timer',
+        name: 'timer',
+        path: '/app/Text/timer',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/timer'),
+          loading: Loading,
+        }),
+      },
+      {
+        title: 'CreateJs',
+        name: 'createjs',
+        path: '/app/Text/createjs',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/createJs'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {
