@@ -93,6 +93,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'PixiJs',
+        name: 'pixijs',
+        path: '/app/Text/pixijs',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/pixiJs'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {
