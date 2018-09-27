@@ -5,6 +5,10 @@ import './index.scss';
 const { Header, Footer, Content } = Layout;
 
 class AntdDemo extends Component {
+  onClick() {
+    console.log('on-------click');
+  }
+
   render() {
     const menu = (
       <Menu>
@@ -25,7 +29,7 @@ class AntdDemo extends Component {
         <Header>
           <div>
             欢迎来到XXXX！
-            <Button>登录</Button> 或 <Button>注册</Button>
+            <Button className="login" onClick={() => this.onClick()}>登录</Button> 或 <Button>注册</Button>
           </div>
           <ul>
             <li>
