@@ -29,5 +29,9 @@
     background: -webkit-linear-gradient(red, blue);
     -webkit-mask: url('./circle.svg') no-repeat;
     -webkit-mask-size: 50px 50px;
+    /* -webkit-mask-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/851550/spongebob.gif);
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-max-width:100%; */
   }
 }

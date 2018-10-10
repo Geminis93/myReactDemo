@@ -7,6 +7,8 @@ const { Header, Footer, Content } = Layout;
 class AntdDemo extends Component {
   onClick() {
     console.log('on-------click');
+    const input = document.getElementById('checkbox');
+    input.indeterminate = !input.indeterminate;
   }
 
   render() {
@@ -41,7 +43,9 @@ class AntdDemo extends Component {
             </li>
           </ul>
         </Header>
-        <Content>Content</Content>
+        <Content>
+          <input type="checkbox" id="checkbox" />
+        </Content>
         <Footer>Footer</Footer>
       </Layout>
     );

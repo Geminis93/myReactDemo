@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Stage, Sprite, render, Text } from "react-pixi-fiber";
 import * as PIXI from "pixi.js";
+import bkg from '../../assets/images/bkg.jpg';
+import audio from './audio.mp3';
 
 const height = 450;
 const width = 800;
@@ -40,7 +42,7 @@ class PixiJs extends Component {
     const { app1 } = this.state;
     const container = new PIXI.Container();
     container.position.set(app1.screen.width / 2, app1.screen.height);
-    const surface = new PIXI.Sprite(new PIXI.Texture.fromImage("../../asset/images/bkg.jpg"));
+    const surface = new PIXI.Sprite(new PIXI.Texture.fromImage(bkg));
     surface.anchor.set(0.5, 1);
     surface.width = app1.screen.width;
     surface.height = app1.screen.height;
@@ -114,6 +116,7 @@ class PixiJs extends Component {
 
       if (this.hitTestRectangle(spr1, rectangle1)) {
         flag1 = true;
+        // this.audioDom.play();
         if (spr1.x >= 700 || spr1.y <= 210) {
           setTimeout(() => {
             spr1.x = 400;
@@ -122,7 +125,6 @@ class PixiJs extends Component {
             app1.ticker.add(addFn1);
           }, 3000)
           app1.ticker.remove(addFn1);
-          // this.audioDom.play();
         }
       }
     }
@@ -211,7 +213,7 @@ class PixiJs extends Component {
     return (
       <div ref={refs => this.dom = refs}>
         <div>
-        <audio ref={(audio) => { this.audioDom = audio; }} controls autoPlay src="./audio.mp3">
+        <audio ref={(audio) => { this.audioDom = audio; }} src={audio}>
           您的浏览器不支持 audio 元素
         </audio>
 
