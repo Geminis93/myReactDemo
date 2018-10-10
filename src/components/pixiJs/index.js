@@ -58,7 +58,7 @@ class PixiJs extends Component {
     spr1.anchor.set(0, 0);
     spr1.x = 400;
     spr1.y = 400;
-
+    spr1.alpha = 1;
     app1.stage.addChild(container);
     container.addChild(surface);
 
@@ -113,15 +113,17 @@ class PixiJs extends Component {
     const addFn1 = (delta) => {
       spr1.x = spr1.x + (flag1 ? 1 : 5);
       spr1.y = spr1.y - (flag1 ? 1 : 3);
+      spr1.alpha = !flag1 ? spr1.alpha : spr1.alpha - 0.05;
 
       if (this.hitTestRectangle(spr1, rectangle1)) {
         flag1 = true;
-        // this.audioDom.play();
+        
         if (spr1.x >= 700 || spr1.y <= 210) {
           setTimeout(() => {
             spr1.x = 400;
             spr1.y = 400;
             flag1 = false;
+            spr1.alpha = 1;
             app1.ticker.add(addFn1);
           }, 3000)
           app1.ticker.remove(addFn1);
@@ -213,10 +215,9 @@ class PixiJs extends Component {
     return (
       <div ref={refs => this.dom = refs}>
         <div>
-        <audio ref={(audio) => { this.audioDom = audio; }} src={audio}>
-          您的浏览器不支持 audio 元素
-        </audio>
-
+          <audio ref={(audio) => { this.audioDom = audio; }} src={audio}>
+            您的浏览器不支持 audio 元素
+          </audio>
         </div>
         {/* 1 */}
         {/* <Stage ref={refs => this.StageDom = refs} options={OPTIONS} width={width} height={height}>
