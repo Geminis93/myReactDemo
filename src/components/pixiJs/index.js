@@ -17,16 +17,21 @@ class PixiJs extends Component {
   state = {
     app: new PIXI.Application(width, height, OPTIONS),
     app1: new PIXI.Application(width, height, OPTIONS),
+    game: new PIXI.Application(width, height, OPTIONS),
     rotation: 0,
     x: 100,
+    info: null,
+    domFlag: false,
   }
 
   componentDidMount() {
-    const { app, app1 } = this.state;
+    const { app, app1, game } = this.state;
     app.ticker.add(this.animate);
-    this.setApp1();
+    // this.setApp1();
+    this.gameDemo();
     this.dom.appendChild(app.view);
-    this.dom.appendChild(app1.view);
+    // this.dom.appendChild(app1.view);
+    this.dom.appendChild(game.view);
   }
 
   animate = delta => {
@@ -46,7 +51,7 @@ class PixiJs extends Component {
     surface.anchor.set(0.5, 1);
     surface.width = app1.screen.width;
     surface.height = app1.screen.height;
-    surface.alpha = 0.5;
+    surface.alpha = 0.5; // 透明度
     // spr
     const spr = new PIXI.Sprite(new PIXI.Texture.fromImage(bunny));
     spr.anchor.set(0, 0);
@@ -133,6 +138,233 @@ class PixiJs extends Component {
 
     app1.ticker.add(addFn);
     app1.ticker.add(addFn1);
+  }
+
+  /**
+   * 移动到左右
+   */
+  gameTrcker(item, hitDom, times) {
+    // 判断 y轴位置
+    if (item.isFirst) {
+      const x = !!times ? hitDom.x + 50 : hitDom.x;
+      const y = !!times ? hitDom.y + 50 : hitDom.y;
+
+      item.isFirst = !item.isFirst;
+      item.vx = (x - item.x) / 90;
+      item.vy = (y - item.y) / 90;
+    }
+
+    item.x += item.vx;
+    item.y += item.vy;
+    if (times) {
+      item.alpha = this.hitTestRectangle(item, hitDom) ? item.alpha - (1 / times) : item.alpha;
+    }
+  }
+
+  /**
+   * 修改移动的左右位置
+   */
+  onChangeFlag = str => () => {
+    this.setState({
+      domFlag: str === 'left',
+    });
+  }
+
+  /**
+   * 触发 收 移动
+   */
+  onStart() {
+    const { game, domFlag, info } = this.state;
+    const { list, itemContainer, left, right } = info;
+    itemContainer.children.map((item, i) => {
+      item.isFirst = true;
+      item.vx = 0;
+      item.vy = 0;
+      item.x = list[i].x;
+      item.y = list[i].y;
+      item.alpha = 1;
+      return item;
+    });
+    
+    let times = 90;
+    console.log(game.ticker);
+    game.ticker.add(() => {
+      const dom = domFlag ? left : right;
+      if (times > 0) {
+        times -= 1;
+        itemContainer.children.forEach(item => this.gameTrcker(item, dom, times));
+      } else {
+        game.ticker.remove(() => {
+          itemContainer.children.forEach(item => this.gameTrcker(item, dom, times));
+        })
+      }
+    });
+  }
+
+  /**
+   * 触发 放 移动
+   */
+  onStart1() {
+    const { game, domFlag, info } = this.state;
+    const { list, itemContainer, left, right } = info;
+    const dom = domFlag ? left : right;
+    itemContainer.children.map(item => {
+      item.isFirst = true;
+      item.vx = 0;
+      item.vy = 0;
+      item.x = dom.x + 50;
+      item.y = dom.y + 50;
+      item.alpha = 1;
+      return item;
+    });
+    
+    let times = 90;
+    game.ticker.add(() => {
+      if (times > 0) {
+        times -= 1;
+        itemContainer.children.forEach((item, i) => this.gameTrcker(item, list[i]));
+      } else {
+        game.ticker.remove(() => {
+          itemContainer.children.forEach((item, i) => this.gameTrcker(item, list[i]));
+        })
+      }
+    });
+  }
+
+  gameDemo() {
+    const { game, domFlag } = this.state;
+
+    const list = [
+      {
+        x: 0,
+        y: 0,
+      },
+      {
+        x: 400,
+        y: 400,
+      },
+      {
+        x: 0,
+        y: 400,
+      },
+      {
+        x: 400,
+        y: 0,
+      },
+      {
+        x: 750,
+        y: 0,
+      },
+      {
+        x: 750,
+        y: 400,
+      },
+    ];
+    // 添加桌子
+    const desk = new PIXI.Graphics();
+    desk.beginFill(0xFF9933);
+    desk.drawRoundedRect(100, 75, 600, 300, 150);
+    game.stage.addChild(desk);
+    // 添加层
+    const itemContainer = new PIXI.Container();
+    game.stage.addChild(itemContainer);
+
+    const left = new PIXI.Graphics();
+    left.beginFill(0x66CCFF, 0.1);
+    left.drawRect(0, 0, 100, 100);
+    left.endFill();
+    left.x = 200;
+    left.y = 175;
+    left.interactive = true;
+    left.buttonMode = true;
+    left.on('click', this.onChangeFlag('left'));
+    game.stage.addChild(left);
+
+    const leftText = new PIXI.Text('Left');
+    leftText.position.set(225, 210);
+    game.stage.addChild(leftText);
+
+    const right = new PIXI.Graphics();
+    right.beginFill(0x66CCFF, 0.1);
+    right.drawRect(0, 0, 100, 100);
+    right.endFill();
+    right.x = 500;
+    right.y = 175;
+    right.interactive = true;
+    right.buttonMode = true;
+    right.on('click', this.onChangeFlag('right'));
+    game.stage.addChild(right);
+
+    const center = new PIXI.Graphics();
+    center.beginFill(0x66CCFF);
+    center.drawRect(0, 0, 40, 20);
+    center.endFill();
+    center.x = 350;
+    center.y = 215;
+    center.interactive = true;
+    center.buttonMode = true;
+    center.on('click', () => this.onStart());
+    game.stage.addChild(center);
+    
+    const centerText = new PIXI.Text('收');
+    centerText.position.set(360, 205);
+    game.stage.addChild(centerText);
+
+    const center2 = new PIXI.Graphics();
+    center2.beginFill(0x66CCFF);
+    center2.drawRect(0, 0, 40, 20);
+    center2.endFill();
+    center2.x = 400;
+    center2.y = 215;
+    center2.interactive = true;
+    center2.buttonMode = true;
+    center2.on('click', () => this.onStart1());
+    game.stage.addChild(center2);
+    
+    const center2Text = new PIXI.Text('放');
+    center2Text.position.set(410, 205);
+    game.stage.addChild(center2Text);
+
+    const rightText = new PIXI.Text('Right');
+    rightText.position.set(525, 210);
+    game.stage.addChild(rightText);
+
+    // 添加人
+    for (let i = 0; i < list.length; i ++) {
+      const spr = new PIXI.Sprite(new PIXI.Texture.fromImage(bunny));
+      spr.anchor.set(0, 0);
+      spr.x = list[i].x;
+      spr.y = list[i].y;
+      spr.isFirst = true;
+      spr.vx = 0;
+      spr.vy = 0;
+      spr.alpha = 1;
+
+      itemContainer.addChild(spr);
+    }
+
+    this.setState({
+      info: {
+        list,
+        itemContainer,
+        left,
+        right,
+      }
+    })
+
+    // this.onStart();
+    /* let times = 90;
+    game.ticker.add(() => {
+      const dom = domFlag ? left : right;
+      if (times > 0) {
+        times -= 1;
+        itemContainer.children.forEach(item => this.gameTrcker(item, dom, times));
+      } else {
+        game.ticker.remove(() => {
+          itemContainer.children.forEach(item => this.gameTrcker(item, dom, times));
+        })
+      }
+    }); */
   }
 
   // 碰撞函数
