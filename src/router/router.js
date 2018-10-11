@@ -103,6 +103,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'GameDemo',
+        name: 'gameDemo',
+        path: '/app/Text/gameDemo',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/gameDemo'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {

@@ -219,8 +219,13 @@ class PixiJs extends Component {
     });
     
     let times = 90;
+    const now = new Date().getTime();
+    const add = now + 1000;
+    game.ticker.speed = 2;
+    console.log(game.ticker);
     game.ticker.add(() => {
-      if (times > 0) {
+      if (new Date().getTime() <= add) {
+        console.log(1);
         times -= 1;
         itemContainer.children.forEach((item, i) => this.gameTrcker(item, list[i]));
       } else {
