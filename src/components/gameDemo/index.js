@@ -14,6 +14,7 @@ class GameDemo extends Component {
     const h = height || 450;
     const o = option || {
       backgroundColor: 0x1099bb,
+      antialias: true,
     };
 
     return new PIXI.Application(w, h, o);
@@ -47,7 +48,7 @@ class GameDemo extends Component {
     const graphics = new PIXI.Graphics();
     graphics.name = name;
     graphics.beginFill(color, alpha);
-    graphics[drawType](x, y, width, height, borderRadius);
+    graphics[drawType](0, 0, width, height, borderRadius);
     graphics.x = x;
     graphics.y = y;
     graphics.interactive = interactive;
@@ -104,8 +105,8 @@ class GameDemo extends Component {
       const desk = this.createGraphics({
         name: 'desk',
         type: 'roundedRect',
-        x: 50,
-        y: 100,
+        x: 100,
+        y: 200,
         width: 800,
         height: 400,
         borderRadius: 200,
@@ -114,41 +115,79 @@ class GameDemo extends Component {
       const desk1 = this.createGraphics({
         name: 'desk1',
         type: 'roundedRect',
-        x: 50,
-        y: 100,
+        x: 100,
+        y: 200,
         width: 800,
         height: 400,
         borderRadius: 200,
         alpha: 0.1
       });
       const left = this.createGraphics({
-        x: 100,
-        y: 125,
+        x: 200,
+        y: 250,
         width: 250,
         height: 300,
         color: 0xFFFFFF,
         alpha: 0.1,
         interactive: true,
-      });
-      left.on('click', () => {
-        console.log('1');
       });
       const right = this.createGraphics({
-        x: 275,
-        y: 125,
+        x: 550,
+        y: 250,
         width: 250,
         height: 300,
         color: 0xFFFFFF,
         alpha: 0.1,
         interactive: true,
       });
-      right.on('click', () => {
+      const clickLeft = this.createGraphics({
+        x: 200,
+        y: 250,
+        width: 250,
+        height: 300,
+        alpha: 0,
+        interactive: true,
+      });
+      clickLeft.on('click', () => {
+        console.log('1');
+      });
+      const clickRight = this.createGraphics({
+        x: 550,
+        y: 250,
+        width: 250,
+        height: 300,
+        alpha: 0,
+        interactive: true,
+      });
+      clickRight.on('click', () => {
         console.log('2');
       });
+      const container = new PIXI.Container();
       view.stage.addChild(desk);
       view.stage.addChild(desk1);
       view.stage.addChild(left);
       view.stage.addChild(right);
+      view.stage.addChild(container);
+      view.stage.addChild(clickLeft);
+      view.stage.addChild(clickRight);
+
+      for (let i = 0; i < 150; i ++) {
+        const xv = Math.random() * 200;
+        const yv = Math.random() * 250;
+
+        const item = new PIXI.Sprite(new PIXI.Texture.fromImage(bunny));
+        item.anchor.set(0, 0);
+        item.x = 480;
+        item.y = 200;
+
+        const item1 = new PIXI.Sprite(new PIXI.Texture.fromImage(bunny));
+        item1.anchor.set(0, 0);
+        item1.x = 480;
+        item1.y = 200;
+
+        container.addChild(item);
+        container.addChild(item1);
+      }
     });
   }
 
