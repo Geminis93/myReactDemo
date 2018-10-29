@@ -14,14 +14,21 @@ const bunny = "https://i.imgur.com/IaUrttj.png";
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
 class PixiJs extends Component {
-  state = {
-    app: new PIXI.Application(width, height, OPTIONS),
-    app1: new PIXI.Application(width, height, OPTIONS),
-    game: new PIXI.Application(width, height, OPTIONS),
-    rotation: 0,
-    x: 100,
-    info: null,
-    domFlag: false,
+  constructor(props) {
+    super(props);
+    // 计算适配比例
+    const scale = window.innerWidth / 750;
+
+    this.state = {
+      scale,
+      app: new PIXI.Application(width * scale, height * scale, OPTIONS),
+      app1: new PIXI.Application(width, height, OPTIONS),
+      game: new PIXI.Application(width, height, OPTIONS),
+      rotation: 0,
+      x: 100,
+      info: null,
+      domFlag: false,
+    }
   }
 
   componentDidMount() {
