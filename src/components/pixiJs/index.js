@@ -8,7 +8,7 @@ const height = 450;
 const width = 800;
 const OPTIONS = {
   backgroundColor: 0x1099bb,
-  // view: document.getElementById('dom')
+  antialias: true,
 };
 const bunny = "https://i.imgur.com/IaUrttj.png";
 const centerAnchor = new PIXI.Point(0.5, 0.5);
