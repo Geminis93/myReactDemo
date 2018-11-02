@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import * as PIXI from "pixi.js";
+import bkg from '../../assets/images/bkg.jpg';
 import './index.scss';
 
 class GameDemo extends Component {
   constructor(props) {
     super(props);
-
+    // 图片缓存
+    
     this.state = {
       scale: 1,
       view: null,
@@ -13,12 +15,25 @@ class GameDemo extends Component {
   }
 
   componentDidMount() {
+    // 自适应屏幕大小
     window.onresize = () => {
-      this.getScale();
+      this.setState({
+        scale: this.setScale(),
+      }, () => {
+        const { view, scale } = this.state;
+        if (view) {
+          view.renderer.resize(1024 * scale, 720 * scale);
+          const root = view.stage.getChildByName('root');
+          root.scale.x = scale;
+          root.scale.y = scale;
+        }
+      })
     };
-    setTimeout(() => {
+    this.setState({
+      scale: this.setScale(),
+    }, () => {
       this.initPIXI();
-    }, 0);
+    });
   }
   // 初始化画布
   initPIXI() {
@@ -31,22 +46,50 @@ class GameDemo extends Component {
     });
     this.setState({
       view,
-    })
-    this.dom.appendChild(view.view);
+    }, () => {
+      this.dom.appendChild(view.view);
+      if (!PIXI.BaseTexture.fromImage('bg').hasLoaded) {
+        PIXI.loader.add([
+          {
+            name: 'bg',
+            url: bkg,
+          },
+        ]).load(() => {
+          this.draw();
+        })
+      } else {
+        this.draw();
+      }
+    });
   }
-  // 自适应
-  getScale() {
-    const { view } = this.state;
+  // 设置画布宽度比例
+  setScale() {
     const width = this.gameBox.clientWidth;
     const scale = width / 1024;
-    console.log('scale --- ', scale);
-    this.setState({
-      scale,
-    })
-    view.renderer.resize(1024 * scale, 720 * scale);
     return scale;
   }
-  // 图片缓存
+
+  // 设置Sprite
+  setSprite(name) {
+    const baseTexture = new PIXI.BaseTexture.fromImage(name);
+    const texture = new PIXI.Texture(baseTexture);
+    const sprite = new PIXI.Sprite(texture);
+    return sprite;
+  }
+
+  // 绘制内容
+  draw() {
+    const { view, scale } = this.state;
+    // root 
+    const container = new PIXI.Container();
+    container.name = 'root';
+    container.scale.x = scale;
+    container.scale.y = scale;
+    // 背景
+    const bg = this.setSprite('bg');
+    container.addChild(bg);
+    view.stage.addChild(container);
+  }
   // 动画的开始与暂停
 
   render() {

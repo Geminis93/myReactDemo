@@ -33,7 +33,7 @@ class PixiJs extends Component {
 
   componentDidMount() {
     const { app, app1, game } = this.state;
-    app.ticker.add(this.animate);
+    // app.ticker.add(this.animate);
     // this.setApp1();
     this.gameDemo();
     this.dom.appendChild(app.view);
@@ -41,14 +41,14 @@ class PixiJs extends Component {
     this.dom.appendChild(game.view);
   }
 
-  animate = delta => {
+  /* animate = delta => {
     const { app } = this.state;
     this.setState(state => ({
       ...state,
       rotation: state.rotation + 0.1 * delta,
       x: state.x > app.screen.width ? 0 : state.x + 5 * delta,
     }));
-  }
+  } */
 
   setApp1() {
     const { app1 } = this.state;
