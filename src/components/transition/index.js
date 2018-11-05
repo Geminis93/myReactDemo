@@ -43,13 +43,21 @@ class Transition extends Component {
 	clickHandler() {
 		const { items } = this.state;
 		this.setState({
-			items: items.length > 0 ? [] : [{ key: 'a', size: 100 }, { key: 'b', size: 200 }, { key: 'c', size: 300 }],
+			items: items.length > 0 ? [] : [
+				{ key: 'a', size: 100, },
+				{ key: 'b', size: 200, },
+				{ key: 'c', size: 300, },
+			],
 		});
 	}
 
 	willEnter() {
 		return { width: 0, height: 0 };
 	}
+	
+	willLeave() {
+		return { width: spring(0), height: spring(0) };
+  }
 
 	onMouseEnter(event) {
 		const top = event.clientY - this.mouseDiv.offsetTop;
@@ -161,14 +169,19 @@ class Transition extends Component {
 						<button onClick={this.clickHandler.bind(this)}>run</button>
 						<TransitionMotion
 							willEnter={this.willEnter}
-							styles={this.state.items.map(item => ({
+							willLeave={this.willLeave}
+							styles={this.state.items.map((item, i) => ({
 								key: item.key,
-								style: { width: spring(item.size), height: spring(item.size) },
+								style: {
+									width: spring(item.size),
+									height: spring(item.size),
+								},
 							}))}>
 							{interpolatedStyles =>
 								<div>
 									{interpolatedStyles.map(config => {
-										return <div key={config.key} style={{ ...config.style, border: '1px solid' }} />
+										return <div 
+											key={config.key} style={{ ...config.style, border: '1px solid' }} />
 									})}
 								</div>
 							}

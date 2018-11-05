@@ -29,6 +29,7 @@ class GameDemo extends Component {
         }
       })
     };
+    // 初始化画布比例绘制
     this.setState({
       scale: this.setScale(),
     }, () => {
