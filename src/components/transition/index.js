@@ -12,10 +12,10 @@ class Transition extends Component {
 		showList: [],
 		items: [],
 		moveStyle: {
-			top: spring(0),
-			left: spring(0),
-			scale: spring(1),
-			opacity: spring(1),
+			top: 0,
+			left: 0,
+			// scale: spring(1),
+			// opacity: spring(1),
 		},
 	};
 
@@ -65,10 +65,10 @@ class Transition extends Component {
 
 		this.setState({
 			moveStyle: {
-				top: spring(top - 25, presets.gentle),
-				left: spring(left - 25, presets.gentle),
-				scale: spring(0, presets.gentle),
-				opacity: spring(0.2),
+				top: spring(top, presets.gentle),
+				left: spring(left, presets.gentle),
+				// scale: spring(0, presets.gentle),
+				// opacity: spring(0.2),
 			}
 		})
 	}
@@ -79,10 +79,10 @@ class Transition extends Component {
 
 		this.setState({
 			moveStyle: {
-				top: spring(top - 25 < 0 ? 0 : top - 25, presets.gentle),
-				left: spring(left - 25 < 0 ? 0 : left - 25, presets.gentle),
-				scale: spring(0, presets.gentle),
-				opacity: spring(0.2),
+				top: spring(top, presets.gentle),
+				left: spring(left, presets.gentle),
+				// scale: spring(0, presets.gentle),
+				// opacity: spring(0.2),
 			}
 		})
 	}
@@ -90,7 +90,7 @@ class Transition extends Component {
 	render() {
 		const { showList, moveStyle } = this.state;
 		const boxes = new Array(10).fill({ scale: 0 });
-		const mouseItems = new Array(10).fill({
+		const mouseItems = new Array(6).fill({
 			top: 0,
 			left: 0,
 			scale: 0,
@@ -202,10 +202,10 @@ class Transition extends Component {
 									const index = i - 1 < 0 ? 0 : i - 1;
 									return i === 0
 										? moveStyle : {
-											top: prevStyles[index].top < 0 ? 0 : prevStyles[index].top,
-											left: prevStyles[index].left < 0 ? 0 : prevStyles[index].left,
-											scale: i * 0.1,
-											opacity: i * 0.2 > 1 ? 1 : i * 0.2,
+											top: spring(prevStyles[index].top, presets.gentle),
+											left: spring(prevStyles[index].left, presets.gentle),
+											// scale: spring(i * 0.2, presets.gentle),
+											// opacity: i * 0.2 > 1 ? 1 : i * 0.2,
 										}
 								})}>
 								{
@@ -216,7 +216,11 @@ class Transition extends Component {
 												<div
 													className="mouse-item"
 													key={i}
-													style={{...item, transform: `scale(${item.scale}, ${item.scale})` }} />
+													style={{
+														// ...item,
+														transform: `translate3d(${item.left - 25}px, ${item.top - 25}px, 0)`,
+													}} />
+													// transform: `scale(${item.scale}, ${item.scale})`
 											)
 										})}
 									</div>

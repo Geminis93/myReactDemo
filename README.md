@@ -11,3 +11,18 @@ emmm，乱七八糟的东西
 /* CSS */
 1. touch-action 指定是否，以及以何种方式，给定的区域，可以由用户通过触摸屏操作
 (简而言之，意思是：这里能不能touch，怎么touch，它说了算。)
+
+
+/* react-motion */
+1. 动效 spring：
+  val:（必填）Number，
+  config:（可选）
+    stiffness: 韧性 默认: 170，
+    damping: 阻力 默认: 26，
+    precision: 密度 默认: 0.01，
+
+2. 预先配置 presets：
+  noWobble: {stiffness: 170, damping: 26}, // the default, if nothing provided
+  gentle: {stiffness: 120, damping: 14},
+  wobbly: {stiffness: 180, damping: 12},
+  stiff: {stiffness: 210, damping: 20},
