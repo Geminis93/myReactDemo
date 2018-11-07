@@ -3,6 +3,12 @@
   height: 320px;
   margin: 30px;
   position: relative;
+  float: left;
+}
+
+.demoShow {
+  float: left;
+  width: 190px;
 }
 
 .demo2-ball {
@@ -13,4 +19,68 @@
   height: 50px;
   text-align: center;
   line-height: 48px;
+}
+
+.demo-item {
+  margin-bottom: 25px;
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: 25px;
+}
+
+.drag-list {
+  width: 400px;
+  padding: 8px;
+  border: 1px solid black;
+
+  &-item {
+    border: 1px solid black;
+    border-radius: 4px;
+    height: 50px;
+    font-size: 24px;
+    margin-bottom: 12px;
+    padding: 0 8px;
+    user-select: none;
+
+    & > h5, & > p {
+      padding: 0;
+      margin: 0;
+      line-height: 24px;
+    }
+  }
+}
+
+// 购物车示例
+.cart {
+  overflow: hidden;
+  margin-top: 25px;
+  position: relative;
+
+  .goods-list {
+    float: left;
+    margin-right: 150px;
+    padding: 20px 20px 0;
+    width: 360px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: beige;
+    border: 1px solid #666;
+
+    & > .goods {
+      text-align: center;
+      line-height: 30px;
+      width: 150px;
+      height: 30px;
+      background-color: #666;
+      color: #FFF;
+      margin-bottom: 20px;
+    }
+  }
+
+  .car {
+    float: left;
+    width: 50px;
+    height: 30px;
+    background-color: cadetblue;
+  }
 }

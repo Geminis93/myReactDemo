@@ -68,6 +68,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'dragList',
+        name: 'dragList',
+        path: '/app/Text/dragList',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/drag/drag'),
+          loading: Loading,
+        }),
+      },
     ]
   },
   {

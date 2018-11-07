@@ -16,55 +16,61 @@ function reinsert(arr, from, to) {
 function clamp(n, min, max) {
   return Math.max(Math.min(n, max), min);
 }
-
-const allColors = [
-  '#EF767A', '#456990', '#49BEAA', '#49DCB1', '#EEB868', '#EF767A', '#456990',
-  '#49BEAA', '#49DCB1', '#EEB868', '#EF767A',
-];
 const allText = [
   {
     text: '零',
     id: 0,
+    color: '#54AAFF',
   },
   {
     text: '一',
     id: 1,
+    color: '#4CC4E8',
   },
   {
     text: '二',
     id: 2,
+    color: '#60FFFA',
   },
   {
     text: '三',
     id: 3,
+    color: '#4CE8B7',
   },
   {
     text: '四',
     id: 4,
+    color: '#54FF98',
   },
   {
     text: '五',
     id: 5,
+    color: '#FF310D',
   },
   {
     text: '六',
     id: 6,
+    color: '#FF007C',
   },
   {
     text: '七',
     id: 7,
+    color: '#E80CE5',
   },
   {
     text: '八',
     id: 8,
+    color: '#BF0DFF',
   },
   {
     text: '九',
     id: 9,
+    color: '#FFB800',
   },
   {
    text:  '十',
    id: 10,
+    color: '#FFFF00',
   }
 ];
 const [count, width, height] = [11, 70, 90];
@@ -83,7 +89,6 @@ class DemoDrag extends Component {
       mouseCircleDelta: [0, 0], // difference between mouse and circle pos for x + y coords, for dragging
       lastPress: null, // key of the last pressed component
       isPressed: false,
-      order: range(allText.length), // index: visual position. value: component key/id
       layout: allText,
     };
   };
@@ -105,7 +110,7 @@ class DemoDrag extends Component {
   };
 
   handleMouseMove = ({pageX, pageY}) => {
-    const { layout, order, lastPress, isPressed, mouseCircleDelta: [dx, dy]} = this.state;
+    const { layout, lastPress, isPressed, mouseCircleDelta: [dx, dy]} = this.state;
     if (isPressed) {
       const mouseXY = [pageX - dx, pageY - dy];
       const col = clamp(Math.floor(mouseXY[0] / width), 0, 2);
@@ -166,7 +171,7 @@ class DemoDrag extends Component {
                     onTouchStart={this.handleTouchStart.bind(null, key, [x, y])}
                     className="demo2-ball"
                     style={{
-                      backgroundColor: allColors[key],
+                      backgroundColor: layout[visualPosition].color,
                       WebkitTransform: `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`,
                       transform: `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`,
                       zIndex: key === lastPress ? 99 : visualPosition,
@@ -177,6 +182,15 @@ class DemoDrag extends Component {
               </Motion>
             );
           })}
+        </div>
+        <div className="demoShow">
+          <ul>
+            {
+              layout.map((item) => {
+                return <li key={item.id}>{item.id} {item.text}</li>;
+              })
+            }
+          </ul>
         </div>
       </div>
     );
