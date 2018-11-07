@@ -50,14 +50,15 @@ class DemoDragList extends Component {
     const GX = goods.offsetLeft;
     const GY = goods.offsetTop;
     const good = [GX, GY];
+    // 复制商品
+    // 添加到动画列表
   }
 
   render() {
-    const { list } = this.state;
     return (
       <div>
         <h3>Drag Demo</h3>
-        <div className="demo-item">
+        {/* <div className="demo-item">
           <h4>Drag List</h4>
           <div className="drag-list">
             {
@@ -69,7 +70,7 @@ class DemoDragList extends Component {
               })
             }
           </div>
-        </div>
+        </div> */}
         <div className="demo-item">
           <h4>shopping cart</h4>
           <div><button onClick={() => this.getCarInfo()}>true</button></div>
