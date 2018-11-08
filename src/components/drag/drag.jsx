@@ -6,6 +6,7 @@ const goodsList = new Array(10).fill({}).map((n, i) => {
   return {
     id: i,
     info: `Goods ${i + 1}`,
+    isSelect: false,
   };
 });
 
@@ -37,45 +38,72 @@ class DemoDragList extends Component {
         },
       ],
       copyGoods: [],
+      goodsList,
     }
   }
+
+  componentDidMount() {
+    const { goodsList } = this.state;
+    goodsList.map((item, index) => {
+      // 商品位置
+      const goods = this.goodsDom.children[index];
+      const GX = goods.offsetLeft;
+      const GY = goods.offsetTop;
+      item.style = {
+        top: GY,
+        left: GX,
+        width: 150,
+        height: 30,
+        borderRadius: 0,
+        opacity: 1,
+      };
+      return item;
+    })
+  }
   
+  // 点击添加动画
   getCarInfo() {
-    const { copyGoods } = this.state;
+    const { copyGoods, goodsList } = this.state;
+    const cartList = [this.cartDomA, this.cartDomB, this.cartDomC];
+    const cartIndex = parseInt(Math.random() * 3, 10);
     // 购物车位置
-    const CX = this.cartDomA.offsetLeft;    
-    const CY = this.cartDomA.offsetTop;
-    const car = [CX, CY];
-    // 商品位置
-    const index = parseInt(Math.random() * 10, 10);
-    const goods = this.goodsDom.children[index];
-    const GX = goods.offsetLeft;
-    const GY = goods.offsetTop;
+    const CX = cartList[cartIndex].offsetLeft;    
+    const CY = cartList[cartIndex].offsetTop;
     // 复制商品
-    const copylist = goodsList.filter((n, i) => i === index).map((item) => {
+    const copylist = goodsList.filter(n => n.isSelect).map((item, index) => {
       return {
         ...item,
         style: {
-          top: GY,
-          left: GX,
-          width: 150,
-          height: 30,
-          borderRadius: 0,
+          ...item.style,
           endTop: CY,
           endLeft: CX,
-          opacity: 1,
         },
       };
     });
     this.setState({
       copyGoods: copyGoods.concat(copylist),
+    }, () => {
+      const list = goodsList.map(item => {
+        item.isSelect = false;
+        return item;
+      });
+      this.setState({
+        goodsList: list,
+      });
     });
     // 添加到动画列表
   }
 
+  // 切换选择项
+  onSelect(index) {
+    const { goodsList } = this.state;
+    goodsList[index].isSelect = !goodsList[index].isSelect;
+    this.setState({
+      goodsList,
+    })
+  }
   render() {
-    const { copyGoods } = this.state;
-    console.log(copyGoods);
+    const { copyGoods, goodsList } = this.state;
     return (
       <div>
         <h3>Drag Demo</h3>
@@ -99,7 +127,8 @@ class DemoDragList extends Component {
             <ul ref={refs => (this.goodsDom = refs)} className="goods-list">
               {
                 goodsList.map((item, i) => {
-                  return <li key={item.id} className="goods">
+                  return <li key={item.id} className="goods" onClick={() => this.onSelect(i)}>
+                    { item.isSelect ? '√' : '' }
                     { item.info }
                   </li>;
                 })
@@ -130,7 +159,7 @@ class DemoDragList extends Component {
                       height: `${interpolatingStyle.height}px`,
                       borderRadius: interpolatingStyle.borderRadius,
                       backgroundColor: '#F00',
-                      position: "absolute",
+                      position: 'absolute',
                       top: interpolatingStyle.top,
                       left: interpolatingStyle.left,
                       opacity: interpolatingStyle.opacity,
