@@ -55,13 +55,13 @@ class DemoDragList extends Component {
         width: 150,
         height: 30,
         borderRadius: 0,
-        opacity: 1,
+        zIndex: 1,
       };
       return item;
     })
   }
   
-  // 点击添加动画
+  // 商品点击添加动画
   getCarInfo() {
     const { copyGoods, goodsList } = this.state;
     const cartList = [this.cartDomA, this.cartDomB, this.cartDomC];
@@ -80,6 +80,7 @@ class DemoDragList extends Component {
         },
       };
     });
+    // 添加到动画列表
     this.setState({
       copyGoods: copyGoods.concat(copylist),
     }, () => {
@@ -91,7 +92,6 @@ class DemoDragList extends Component {
         goodsList: list,
       });
     });
-    // 添加到动画列表
   }
 
   // 切换选择项
@@ -103,11 +103,11 @@ class DemoDragList extends Component {
     })
   }
   render() {
-    const { copyGoods, goodsList } = this.state;
+    const { copyGoods, goodsList, list } = this.state;
     return (
       <div>
         <h3>Drag Demo</h3>
-        {/* <div className="demo-item">
+        <div className="demo-item">
           <h4>Drag List</h4>
           <div className="drag-list">
             {
@@ -119,7 +119,7 @@ class DemoDragList extends Component {
               })
             }
           </div>
-        </div> */}
+        </div>
         <div className="demo-item">
           <h4>shopping cart</h4>
           <div><button onClick={() => this.getCarInfo()}>true</button></div>
@@ -147,7 +147,6 @@ class DemoDragList extends Component {
                     borderRadius: spring(30),
                     top: spring(style.endTop),
                     left: spring(style.endLeft),
-                    opacity: spring(0),
                   }}
                   onRest={() => {
                     this[`motion${i}`].remove();
@@ -162,7 +161,6 @@ class DemoDragList extends Component {
                       position: 'absolute',
                       top: interpolatingStyle.top,
                       left: interpolatingStyle.left,
-                      opacity: interpolatingStyle.opacity,
                   }}
                   ref={refs => this[`motion${i}`] = refs}>{ item.info }</div>
                   }

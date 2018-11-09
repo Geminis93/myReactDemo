@@ -79,13 +79,15 @@
   }
 
   .cars {
-    float: left;
+    float: right;
 
     & .car {
       width: 50px;
       height: 30px;
       background-color: cadetblue;
       margin-bottom: 50px;
+      position: relative;
+      z-index: 10;
     }
   }
 }
