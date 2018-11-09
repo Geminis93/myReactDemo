@@ -15,26 +15,43 @@ class DemoDragList extends Component {
     super(props);
 
     this.state = {
-      list: [
+      isStart: false,
+      dragList: [
         {
           id: 1,
           title: 'a',
           text: 'text 1111',
+          style: {
+            transitionX: 0,
+            transitionY: 0,
+          },
         },
         {
           id: 2,
           title: 'b',
           text: 'text 2222',
+          style: {
+            transitionX: 0,
+            transitionY: 0,
+          },
         },
         {
           id: 3,
           title: 'c',
           text: 'text 3333',
+          style: {
+            transitionX: 0,
+            transitionY: 0,
+          },
         },
         {
           id: 4,
           title: 'd',
           text: 'text 4444',
+          style: {
+            transitionX: 0,
+            transitionY: 0,
+          },
         },
       ],
       copyGoods: [],
@@ -94,7 +111,7 @@ class DemoDragList extends Component {
     });
   }
 
-  // 切换选择项
+  // 切换物品选择项
   onSelect(index) {
     const { goodsList } = this.state;
     goodsList[index].isSelect = !goodsList[index].isSelect;
@@ -102,24 +119,70 @@ class DemoDragList extends Component {
       goodsList,
     })
   }
+
+  onMouseDown = (option, {pageX, pageY}) => {
+    console.log(option);
+    // 鼠标位置
+    // 移动项信息
+    this.setState({
+      startId: option.id,
+      isStart: true,
+      mouseXY: [pageX, pageY],
+    });
+  }
+
+  onMouseMove = (option, {pageX, pageY}) => {
+    const { isStart, mouseXY } = this.state;
+    if (isStart) {
+      console.log({pageX, pageY});
+      this.setState({
+        moveXY: [(pageX - mouseXY[0]), (pageY - mouseXY[1])],
+      })
+    }
+  }
+
+  onMouseUp = () => {
+    this.setState({isStart: false});
+  };
+
   render() {
-    const { copyGoods, goodsList, list } = this.state;
+    const { copyGoods, goodsList, dragList, startId } = this.state;
     return (
       <div>
         <h3>Drag Demo</h3>
+        {/* 拖拽列表 */}
         <div className="demo-item">
           <h4>Drag List</h4>
           <div className="drag-list">
             {
-              list.map((item, i) => {
-                return <div key={item.title} className="drag-list-item">
-                  <h5>{ item.title }</h5>
-                  <p>{ item.text }</p>
-                </div>;
+              dragList.length > 0 && dragList.map((item, i) => {
+                if (item.id === startId) {
+
+                }
+                return (
+                  <Motion key={item.id} style={item.style}>
+                    {
+                      ({ translateX, translateY }) => (
+                        <div
+                          onMouseDown={this.onMouseDown.bind(null, item)}
+                          onMouseMove={this.onMouseMove.bind(null, item)}
+                          onMouseUp={this.onMouseUp.bind(null)}
+                          className="drag-list-item"
+                          style={{
+                            transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
+                          }}>
+                          <h5>{ item.title }</h5>
+                          <p>{ item.text }</p>
+                        </div>
+                      )
+                    }
+                  </Motion>
+                );
               })
             }
           </div>
         </div>
+        {/* 购物车 */}
         <div className="demo-item">
           <h4>shopping cart</h4>
           <div><button onClick={() => this.getCarInfo()}>true</button></div>
