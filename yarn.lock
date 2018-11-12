@@ -6424,6 +6424,14 @@ rc-progress@~2.2.2:
     babel-runtime "6.x"
     prop-types "^15.5.8"
 
+rc-queue-anim@^1.6.7:
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/rc-queue-anim/-/rc-queue-anim-1.6.7.tgz#d0c63d2ad2d7c1f47b11caeb807fd6908a8cca64"
+  dependencies:
+    babel-runtime "6.x"
+    prop-types "^15.6.0"
+    rc-tween-one "^2.2.8"
+
 rc-rate@~2.4.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/rc-rate/-/rc-rate-2.4.2.tgz#c097bfdba7a5783cec287c928b1461cc1621f836"

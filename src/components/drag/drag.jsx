@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Motion, spring } from 'react-motion';
+import ListSort from './listSort';
 import './index.scss';
 
 const goodsList = new Array(10).fill({}).map((n, i) => {
@@ -15,6 +16,7 @@ class DemoDragList extends Component {
     super(props);
 
     this.state = {
+      className: 'drag-list',
       isStart: false,
       dragList: [
         {
@@ -120,66 +122,30 @@ class DemoDragList extends Component {
     })
   }
 
-  onMouseDown = (option, {pageX, pageY}) => {
-    console.log(option);
-    // 鼠标位置
-    // 移动项信息
-    this.setState({
-      startId: option.id,
-      isStart: true,
-      mouseXY: [pageX, pageY],
-    });
-  }
-
-  onMouseMove = (option, {pageX, pageY}) => {
-    const { isStart, mouseXY } = this.state;
-    if (isStart) {
-      console.log({pageX, pageY});
-      this.setState({
-        moveXY: [(pageX - mouseXY[0]), (pageY - mouseXY[1])],
-      })
-    }
-  }
-
-  onMouseUp = () => {
-    this.setState({isStart: false});
-  };
-
   render() {
-    const { copyGoods, goodsList, dragList, startId } = this.state;
+    const { copyGoods, goodsList, dragList, className } = this.state;
     return (
       <div>
         <h3>Drag Demo</h3>
         {/* 拖拽列表 */}
         <div className="demo-item">
           <h4>Drag List</h4>
-          <div className="drag-list">
-            {
-              dragList.length > 0 && dragList.map((item, i) => {
-                if (item.id === startId) {
-
-                }
-                return (
-                  <Motion key={item.id} style={item.style}>
-                    {
-                      ({ translateX, translateY }) => (
-                        <div
-                          onMouseDown={this.onMouseDown.bind(null, item)}
-                          onMouseMove={this.onMouseMove.bind(null, item)}
-                          onMouseUp={this.onMouseUp.bind(null)}
-                          className="drag-list-item"
-                          style={{
-                            transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
-                          }}>
-                          <h5>{ item.title }</h5>
-                          <p>{ item.text }</p>
-                        </div>
-                      )
-                    }
-                  </Motion>
-                );
-              })
-            }
+          <div  className="drag-list">
+            <ListSort
+              dragClassName='drag-item'
+              appearAnim={{ animConfig: { marginTop: [5, 30], opacity: [1, 0] } }}
+            >
+              {
+                dragList.length > 0 && dragList.map((item) => {
+                  return (
+                    <div className={`${className}-item`} key={item.id}>
+                      <h5>{ item.title }</h5>
+                      <p>{ item.text }</p>
+                    </div>
+                  );
+                })
+              }
+            </ListSort>
           </div>
         </div>
         {/* 购物车 */}

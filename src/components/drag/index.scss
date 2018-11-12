@@ -41,11 +41,16 @@
     margin-bottom: 12px;
     padding: 0 8px;
     user-select: none;
-
+  
     & > h5, & > p {
       padding: 0;
       margin: 0;
       line-height: 24px;
+    }
+
+    & .drag-item {
+      box-shadow: 0 8px 20px #E6E6E6;
+      transform: scale(1.1) !important;
     }
   }
 }
