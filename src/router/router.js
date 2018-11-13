@@ -78,6 +78,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'reactDnd',
+        name: 'reactDnd',
+        path: '/app/Text/reactDnd',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/drag/reactdnd'),
+          loading: Loading,
+        }),
+      },
     ]
   },
   {
