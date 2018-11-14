@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const getItems = (count) => Array.from({length: count}, (v, k) => k).map(k => ({
-  id: `item-${k}`,
-  content: `item ${k}`
-}));
+const getItems = count =>
+  Array.from({ length: count }, (v, k) => k).map(k => ({
+    id: `item-${k}`,
+    content: `item ${k}`,
+  }));
 
-const reorder =  (list, startIndex, endIndex) => {
+const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -15,32 +16,34 @@ const reorder =  (list, startIndex, endIndex) => {
 };
 
 const grid = 8;
-const getItemStyle = (draggableStyle, isDragging) => ({
+
+const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: 'none',
   padding: grid * 2,
-  marginBottom: grid,
+  margin: `0 0 ${grid}px 0`,
 
   background: isDragging ? 'lightgreen' : 'grey',
 
-  ...draggableStyle
+  ...draggableStyle,
 });
-const getListStyle = (isDraggingOver) => ({
+
+const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
   padding: grid,
-  width: 250
+  width: 250,
 });
 
 class DragReactDnd extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: getItems(10)
-    }
+      items: getItems(10),
+    };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
-  onDragEnd (result) {
-    if(!result.destination) {
+  onDragEnd(result) {
+    if (!result.destination) {
       return;
     }
 
@@ -51,7 +54,7 @@ class DragReactDnd extends Component {
     );
 
     this.setState({
-      items
+      items,
     });
   }
 
@@ -64,28 +67,24 @@ class DragReactDnd extends Component {
               ref={provided.innerRef}
               style={getListStyle(snapshot.isDraggingOver)}
             >
-              {this.state.items.map(item => (
-                <Draggable
-                  key={item.id}
-                  draggableId={item.id}
-                >
+              {this.state.items.map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
-                    <div>
-                      <div
-                        ref={provided.innerRef}
-                        style={getItemStyle(
-                          provided.draggableStyle,
-                          snapshot.isDragging
-                        )}
-                        {...provided.dragHandleProps}
-                      >
-                        {item.content}
-                      </div>
-                      {provided.placeholder}
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                    >
+                      {item.content}
                     </div>
                   )}
                 </Draggable>
               ))}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
