@@ -27,3 +27,11 @@ emmm，乱七八糟的东西
   gentle: {stiffness: 120, damping: 14},
   wobbly: {stiffness: 180, damping: 12},
   stiff: {stiffness: 210, damping: 20},
+
+/* [`react-beautiful-dnd`](http://www.weber.pub/archives/53.html) */
+DragDropContext：包裹拖拽的dom，添加拖拽事件
+  onDragStart：拖动开始
+  onDragUpdate：拖动过程中发生某些变化
+  onDragEnd：拖动结束 // 必填项
+Droppable：包裹Draggable组件
+Draggable：拖拽组件
