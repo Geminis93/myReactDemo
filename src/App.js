@@ -82,7 +82,7 @@ class App extends Component {
               <Breadcrumb.Item>List</Breadcrumb.Item>
               <Breadcrumb.Item>App</Breadcrumb.Item>
             </Breadcrumb> */}
-            <Content style={{ background: '#fff', padding: 24, margin: 0, }}>
+            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 'auto', }}>
               <Routes />
             </Content>
           </Layout>
