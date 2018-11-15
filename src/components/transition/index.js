@@ -11,6 +11,7 @@ class Transition extends Component {
 	state = {
 		showList: [],
 		items: [],
+		diceClass: '',
 		moveStyle: {
 			top: 0,
 			left: 0,
@@ -60,6 +61,7 @@ class Transition extends Component {
   }
 
 	onMouseEnter(event) {
+		console.log(event);
 		const top = event.clientY - this.mouseDiv.offsetTop;
 		const left = event.clientX - this.mouseDiv.offsetLeft;
 
@@ -87,8 +89,21 @@ class Transition extends Component {
 		})
 	}
 
+	// 摇骰子
+	onClickDice() {
+		this.setState({
+			diceClass: 'dice-move',
+		}, () => {
+			setTimeout(()=> {
+				this.setState({
+					diceClass: 'dice-stop',
+				})
+			}, 3000)
+		})
+	}
+
 	render() {
-		const { showList, moveStyle } = this.state;
+		const { showList, moveStyle, diceClass } = this.state;
 		const boxes = new Array(10).fill({ scale: 0 });
 		const mouseItems = new Array(6).fill({
 			top: 0,
@@ -189,7 +204,7 @@ class Transition extends Component {
 					</div>
 				</div>
 
-				<div>
+				{/* <div>
 					<h3>Mouseover</h3>
 					<div
 						className="mouse"
@@ -227,6 +242,23 @@ class Transition extends Component {
 								}
 							</StaggeredMotion>
 						}
+					</div>
+				</div> */}
+
+				<div>
+					<h3>3D</h3>
+					<div className="3d-wrap">
+						<div>
+							<button onClick={() => this.onClickDice()}>摇骰子</button>
+						</div>
+						<div className={`dice-wrap ${diceClass}`}>
+							<span className="dice-item">1</span>
+							<span className="dice-item">6</span>
+							<span className="dice-item">3</span>
+							<span className="dice-item">4</span>
+							<span className="dice-item">5</span>
+							<span className="dice-item">2</span>
+						</div>
 					</div>
 				</div>
 			</div>

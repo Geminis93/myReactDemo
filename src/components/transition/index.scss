@@ -41,3 +41,111 @@
     position: absolute;
   }
 }
+
+.dice-wrap {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  color: #ff92ff;
+  font-size: 36px;
+  font-weight: 100;
+  text-align: center;
+  line-height: 200px;
+  transform-style: preserve-3d;
+  transform: rotateX(-45deg) rotateY(-45deg) rotateZ(0deg);
+
+  &::after, &::before {
+    content: '';
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background-color: #ffe7f9;
+  }
+
+  &::after {
+    transform: rotateX(90deg);
+  }
+
+  & .dice-inner {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    background-color: #ffe7f9;
+    transform: rotateY(90deg);
+  }
+
+  & .dice-item {
+    text-align: center;
+    line-height: 90px;
+    font-size: 24px;
+    display: block;
+    width: 100px;
+    height: 100px;
+    background-color: #ffe7f9;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    border: 1px solid #666;
+    // opacity: 0.9;
+    border-radius: 30%;
+    user-select: none;
+
+    &:nth-child(1) {
+      transform: translateZ(50px);
+    }
+  
+    &:nth-child(2) {
+      transform: translateZ(-50px) rotateY(180deg);
+    }
+    
+    &:nth-child(3) {
+      transform: translateX(-50px) rotateY(-90deg);
+    }
+  
+    &:nth-child(4) {
+      transform: translateX(50px) rotateY(90deg);
+    }
+  
+    &:nth-child(5) {
+      transform: translateY(-50px) rotateX(90deg);
+    }
+  
+    &:nth-child(6) {
+      transform: translateY(50px) rotateX(-90deg);
+    }
+  }
+}
+
+// 模拟骰子转动
+.dice-move {
+  animation: move 1s infinite linear;
+}
+// 骰子停止
+.dice-stop {
+  animation: stop 1s 1 ease-out;
+  transform: rotateX(135deg) rotateY(45deg) rotateZ(0deg);
+}
+
+@keyframes move {
+  0% {
+    transform: rotateX(-45deg) rotateY(-45deg) rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateX(720deg) rotateY(540deg) rotateZ(0deg);
+  }
+}
+
+@keyframes stop {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateX(135deg) rotateY(40deg) rotateZ(0deg);
+  }
+}
