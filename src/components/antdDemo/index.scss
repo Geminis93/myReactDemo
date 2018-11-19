@@ -18,3 +18,37 @@
     }
   }
 }
+
+.button-wrap {
+  width: 301px;
+  display: flex;
+  border: 1px solid #CCC;
+  border-right: none;
+  border-bottom: none;
+  flex-wrap: wrap;
+
+  & > .button-item {
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    width: 100px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+  }
+}
+
+.input-wrap {
+  width: 301px;
+  height: 35px;
+  display: flex;
+  justify-content: space-around;
+
+  & > .input-item {
+    width: 30px;
+    height: 35px;
+    border: 1px solid #CCC;
+    text-align: center;
+    line-height: 35px;
+    font-size: 48px;
+  }
+}

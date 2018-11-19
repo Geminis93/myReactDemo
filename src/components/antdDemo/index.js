@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { Layout, Button, Dropdown, Icon, Menu } from 'antd';
+import KeyBoard from './KeyBoard.js';
 import './index.scss';
 
 const { Header, Footer, Content } = Layout;
 
 class AntdDemo extends Component {
   onClick() {
-    console.log('on-------click');
     const input = document.getElementById('checkbox');
     input.indeterminate = !input.indeterminate;
+  }
+
+  onPay = () => () => {
+    console.log('支付');
   }
 
   render() {
@@ -45,6 +49,7 @@ class AntdDemo extends Component {
         </Header>
         <Content>
           <input type="checkbox" id="checkbox" />
+          <KeyBoard onPay={this.onPay()} />
         </Content>
         <Footer>Footer</Footer>
       </Layout>
