@@ -143,6 +143,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'cude',
+        name: 'cude',
+        path: '/app/Text/cude',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/cude'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {

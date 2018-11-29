@@ -1,0 +1,36 @@
+{"frames": {
+
+"blob.png":
+{
+	"frame": {"x":0,"y":0,"w":32,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":24},
+	"sourceSize": {"w":32,"h":24}
+},
+"cat.png":
+{
+	"frame": {"x":0,"y":32,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+	"sourceSize": {"w":64,"h":64}
+},
+"door.png":
+{
+	"frame": {"x":32,"y":0,"w":32,"h":32},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":32},
+	"sourceSize": {"w":32,"h":32}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "chip1.png",
+	"format": "RGBA8888",
+	"size": {"w":64,"h":96},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1fffb0db27ba7fd3682285d9ca2f8e41:7082cca17edc3a5e89ac0ef3b449e37b:ff425fa14f2deafad52818a5a9d92adb$"
+}
+}

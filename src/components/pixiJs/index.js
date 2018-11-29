@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Stage, Sprite, render, Text } from "react-pixi-fiber";
 import * as PIXI from "pixi.js";
 import bkg from '../../assets/images/bkg.jpg';
+import imgJson from '../../assets/chip1.json';
 import audio from './audio.mp3';
 
 const height = 450;
@@ -39,6 +40,14 @@ class PixiJs extends Component {
     this.dom.appendChild(app.view);
     // this.dom.appendChild(app1.view);
     this.dom.appendChild(game.view);
+
+    console.log(imgJson);
+    PIXI.loader.add({
+      name: 'json',
+      url: '../../assets/chip1.json',
+    }).load(() => {
+      console.log('json ---- ', PIXI.loader.resources['json']);
+    })
   }
 
   /* animate = delta => {
