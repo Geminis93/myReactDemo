@@ -4,6 +4,8 @@ emmm，乱七八糟的东西
 1. 图片loader
 2. 画布自适应
 3. BaseTexture 纹理缓存类
+4. 材质包由于 Webpack 打包问题，线上环境静态资源路径会有变化，可先加载雪碧图，然后再去加载 json 解析
+  e.g. loader.add(img).load(() => { new PIXI.Spritesheet(resources[img].texture.baseTexture, json); })
 
 /* 浏览器兼容 */
 1. Safari不支持 new Date('2018-09-10 20:20:20') 不支持杠杠 0.0;
