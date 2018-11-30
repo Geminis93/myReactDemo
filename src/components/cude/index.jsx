@@ -186,6 +186,19 @@ class PixiJs extends Component {
     rotateY(cube.vectors);
     rotateX(cube.vectors);
     const list = cube._draw();
+
+    const animate = () => {
+      console.log(1);
+      // ctx.clearRect(0, 0, canvas.width, canvas.height)
+  
+      rotateY(cube.vectors);
+      rotateX(cube.vectors);
+      cube._draw();
+      // requestAnimationFrame(animate);
+    }
+
+    animate();
+
     list.map((item) => {
       /* const { width, height, top, left } = item.getBounds();
       let graysprite = this.createSprite('gray');

@@ -64,6 +64,7 @@
     "resolve": "1.6.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
+    "three.js": "^0.77.1",
     "url-loader": "0.6.2",
     "wangeditor": "^3.1.1",
     "webpack": "3.8.1",
