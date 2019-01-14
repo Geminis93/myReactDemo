@@ -37,3 +37,5 @@ DragDropContext：包裹拖拽的dom，添加拖拽事件
   onDragEnd：拖动结束 // 必填项
 Droppable：包裹Draggable组件
 Draggable：拖拽组件
+
+/* TweenMax */

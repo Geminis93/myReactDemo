@@ -153,6 +153,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'carousel3D',
+        name: 'carousel3D',
+        path: '/app/Text/carousel3D',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/carousel'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {
