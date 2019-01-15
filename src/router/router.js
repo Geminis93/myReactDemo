@@ -143,6 +143,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'idea',
+        name: 'idea',
+        path: '/app/Test/idea',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/test/idea'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {
