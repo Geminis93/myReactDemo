@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import * as PIXI from "pixi.js";
-import red from '../../assets/cude/7.png';
-import white from '../../assets/cude/9.png';
-import blue from '../../assets/cude/5.png';
-import green from '../../assets/cude/4.png';
-import black from '../../assets/cude/2.png';
-import gray from '../../assets/cude/3.png';
+import red from '../../../assets/cude/7.png';
+import white from '../../../assets/cude/9.png';
+import blue from '../../../assets/cude/5.png';
+import green from '../../../assets/cude/4.png';
+import black from '../../../assets/cude/2.png';
+import gray from '../../../assets/cude/3.png';
 
 const height = 400;
 const width = 400;
