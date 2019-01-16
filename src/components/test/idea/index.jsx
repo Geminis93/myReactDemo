@@ -13,11 +13,15 @@ class IdeaIndex extends PureComponent {
   }
 
   componentDidMount() {
+    const {
+      clientWidth,
+      clientHeight,
+    } = this.canvasDom.parentElement;
     const settings = {
       image: opacity, // image path
       dropRadius: 3, // radius of the source ripple
-      width: 360, // width
-      height: 480, // height
+      width: clientWidth, // width
+      height: clientHeight, // height
       delay: 3, // the time between auto disturb
       auto: 0, // true means auto disturb
     };
