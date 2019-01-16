@@ -1,15 +1,27 @@
 .idea-style {
-  // width: 360px;
-  // height: 480px;
+  width: 360px;
+  height: 480px;
   overflow: hidden;
-  background-image: url('../../../assets/images/dark-indoors-landscape-1578287.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
   color: #a2e8dbb5;
-  padding: 32px;
+  position: relative;
 
   & > p {
     font-size: 20px;
     line-height: 32px;
+    position: absolute;
+    z-index: 2;
+    top: 32px;
+    left: 32px;
+    right: 32px;
+    bottom: 32px;
+  }
+
+  &-img {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
