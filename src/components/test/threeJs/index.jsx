@@ -8,6 +8,11 @@ import style from './index.scss';
 const cx = classNames.bind(style);
 
 class ThreeJsDemo extends PureComponent {
+  state = {
+    scene: null,
+    camera: null,
+    renderer: null,
+  }
   componentDidMount() {
     this.initThree();
   }
@@ -27,10 +32,24 @@ class ThreeJsDemo extends PureComponent {
     renderer.setSize(clientWidth, clientHeight);
     this.threeDom.appendChild(renderer.domElement);
 
+
+    this.setState({
+      scene,
+      camera,
+      renderer,
+    }, () => {
+      this.addCube();
+      this.setGui();
+    })
+  }
+
+  addCube() {
+    const { scene, camera, renderer } = this.state;
     // 创建立方体
     const cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // 立方体模型
     const cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 }); // 立方体材质,颜色为随机色
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial); // 创建网格实例
+    cube.name = 'cube';
     // 将立方体加入场景
     scene.add(cube);
     // 创建光源 ambientLight:环境光、directionalLight:平行光
@@ -56,6 +75,12 @@ class ThreeJsDemo extends PureComponent {
       renderer.render(scene, camera);
     };
     animate();
+  }
+
+  setGui() {
+    const { scene } = this.state;
+    // const dat = new Dat.GUI();
+    console.log(scene.getObjectByName('cube'));
   }
 
   render() {
