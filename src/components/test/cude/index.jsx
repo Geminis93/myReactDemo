@@ -208,6 +208,7 @@ class PixiJs extends Component {
       graysprite.y = top;
       item.addChild(graysprite); */
       app.stage.addChild(item);
+      return item;
     });
   }
 
