@@ -153,6 +153,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'threeJs',
+        name: 'threeJs',
+        path: '/app/Test/threeJs',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/test/threeJs'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {
