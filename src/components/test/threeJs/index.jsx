@@ -57,7 +57,7 @@ class ThreeJsDemo extends PureComponent {
     const { scene, camera, renderer, guiInfo } = this.state;
     // 创建立方体
     const cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // 立方体模型
-    const cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 }); // 立方体材质,颜色为随机色
+    const cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 }); // 立方体材质
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial); // 创建网格实例
     cube.name = 'cube';
     // 将立方体加入场景

@@ -163,6 +163,16 @@ const router = [
           loading: Loading,
         }),
       },
+      {
+        title: 'threeJsShadow',
+        name: 'threeJsShadow',
+        path: '/app/Test/threeJsShadow',
+        exact: true,
+        component: Loadable({
+          loader: () => import('../components/test/threeJs/shadow'),
+          loading: Loading,
+        }),
+      },
     ],
   },
   {
