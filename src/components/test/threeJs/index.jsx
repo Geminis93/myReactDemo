@@ -12,11 +12,20 @@ class ThreeJsDemo extends PureComponent {
     scene: null,
     camera: null,
     renderer: null,
+    guiInfo: {
+      cubeX: 0.1,
+      cubeY: 0.2,
+      rendererColor: 0x0099ff,
+      cameraX: 0,
+      cameraY: 0,
+      cameraZ: 0,
+    },
   }
   componentDidMount() {
     this.initThree();
   }
 
+  // 初始化创建three场景
   initThree() {
     const {
       clientWidth,
@@ -28,7 +37,7 @@ class ThreeJsDemo extends PureComponent {
     const renderer = new THREE.WebGLRenderer();
     renderer.antialias = true; // 抗锯齿
     renderer.autoClear = true; // 自动清除
-    renderer.setClearColor( 0x0099ff ); // 渲染背景色
+    renderer.setClearColor(0x0099ff); // 渲染背景色
     renderer.setSize(clientWidth, clientHeight);
     this.threeDom.appendChild(renderer.domElement);
 
@@ -39,12 +48,13 @@ class ThreeJsDemo extends PureComponent {
       renderer,
     }, () => {
       this.addCube();
-      this.setGui();
+      // this.setGui();
     })
   }
 
+  // 添加立方体
   addCube() {
-    const { scene, camera, renderer } = this.state;
+    const { scene, camera, renderer, guiInfo } = this.state;
     // 创建立方体
     const cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // 立方体模型
     const cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 }); // 立方体材质,颜色为随机色
@@ -69,18 +79,34 @@ class ThreeJsDemo extends PureComponent {
     const animate = function () {
       requestAnimationFrame(animate);
 
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+      cube.rotation.x += guiInfo.cubeX;
+      cube.rotation.y += guiInfo.cubeY;
 
       renderer.render(scene, camera);
     };
     animate();
   }
 
+  // 添加调试工具
   setGui() {
-    const { scene } = this.state;
-    // const dat = new Dat.GUI();
-    console.log(scene.getObjectByName('cube'));
+    const { renderer, guiInfo, camera } = this.state;
+    const dat = new Dat.GUI();
+    
+
+    dat.add(guiInfo, "cubeX", 0, 1);
+    dat.add(guiInfo, "cubeY", 0, 1);
+    dat.add(guiInfo, "cameraX", 0, 10).step(0.5).onChange((e) => {
+      camera.position.x = e;
+    });
+    dat.add(guiInfo, "cameraY", 0, 10).step(0.5).onChange((e) => {
+      camera.position.y = e;
+    });
+    dat.add(guiInfo, "cameraZ", 0, 10).step(0.5).onChange((e) => {
+      camera.position.z = e;
+    });
+    dat.addColor(guiInfo, "rendererColor", 0x0099ff).onChange((e) => {
+      renderer.setClearColor(e); // 渲染背景色
+    });
   }
 
   render() {
