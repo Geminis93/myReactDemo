@@ -68,20 +68,21 @@ class ThreeJsDemo extends PureComponent {
     sphere.position.y = 10;
     sphere.position.z = -30;
     sphere.castShadow = true;
-    scene.add(sphere);
+    // scene.add(sphere);
 
     // 创建立方体
     const cubeGeometry = new THREE.CubeGeometry(20, 20, 20);
     const cubeMaterial = new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff });
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     cube.position.x = 10;
-    cube.position.z = 100;
+    cube.position.z = 0;
     cube.castShadow = true;
     scene.add(cube);
 
     const pivotPiont = new THREE.Object3D();
-    pivotPiont.add(cube);
-    sphere.add(pivotPiont);
+    pivotPiont.add(sphere);
+    console.log('pivotPiont --- ', pivotPiont);
+    cube.add(pivotPiont);
 
     // 把渲染的页面添加到div
     this.threeDom.append(webGLRenderer.domElement);
@@ -89,7 +90,7 @@ class ThreeJsDemo extends PureComponent {
 
     function render() {
       // 让立方体 绕坐标轴旋转
-      sphere.rotation.y += 0.01;
+      cube.rotation.y += 0.01;
       // 开始渲染
       webGLRenderer.render(scene, camera);
     }
