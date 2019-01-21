@@ -9,7 +9,8 @@ emmm，乱七八糟的东西
 
 /* 浏览器兼容 */
 1. Safari不支持 new Date('2018-09-10 20:20:20') 不支持杠杠 0.0;
-2. passive: flase 阻止浏览器默认橡皮筋效果
+2. passive: flase 阻止浏览器默认橡皮筋效果 .addEventListener('touchmove', () => {}, { passive: false });
+
 
 /* CSS */
 1. touch-action 指定是否，以及以何种方式，给定的区域，可以由用户通过触摸屏操作
