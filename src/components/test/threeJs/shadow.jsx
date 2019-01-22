@@ -18,10 +18,11 @@ class ThreeJsDemo extends PureComponent {
 
   // 初始化创建three场景
   initThree() {
+    const threeDom = this.threeDom;
     // 创建场景
     const scene = new THREE.Scene();
     // 创建相机
-    const camera = new THREE.PerspectiveCamera(45, this.threeDom.clientWidth / this.threeDom.clientHeight, 0.1, 10000);
+    const camera = new THREE.PerspectiveCamera(45, threeDom.clientWidth / threeDom.clientHeight, 0.1, 10000);
     // 创建渲染器
     const webGLRenderer = new THREE.WebGLRenderer();
     // 配置相机
@@ -31,7 +32,7 @@ class ThreeJsDemo extends PureComponent {
     // 配置渲染器
     webGLRenderer.antialias = true;
     webGLRenderer.setClearColor(0x050505);
-    webGLRenderer.setSize(this.threeDom.clientWidth, this.threeDom.clientHeight);
+    webGLRenderer.setSize(threeDom.clientWidth, threeDom.clientHeight);
     //开启阴影效果
     webGLRenderer.shadowMap.enabled = true;
 
@@ -68,29 +69,35 @@ class ThreeJsDemo extends PureComponent {
     sphere.position.y = 10;
     sphere.position.z = -30;
     sphere.castShadow = true;
-    // scene.add(sphere);
+    scene.add(sphere);
 
     // 创建立方体
-    const cubeGeometry = new THREE.CubeGeometry(20, 20, 20);
+    const cubeGeometry = new THREE.CubeGeometry(40, 20, 10);
     const cubeMaterial = new THREE.MeshLambertMaterial({ color: Math.random() * 0xffffff });
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     cube.position.x = 10;
-    cube.position.z = 0;
+    cube.position.z = 120;
     cube.castShadow = true;
-    scene.add(cube);
+    // scene.add(cube);
+    sphere.add(cube);
 
-    const pivotPiont = new THREE.Object3D();
+    /* const pivotPiont = new THREE.Object3D();
     pivotPiont.add(sphere);
-    console.log('pivotPiont --- ', pivotPiont);
-    cube.add(pivotPiont);
+    sphere.add(pivotPiont); */
 
     // 把渲染的页面添加到div
     this.threeDom.append(webGLRenderer.domElement);
 
-
+    let number = 5;
+    let step = 0.1;
     function render() {
-      // 让立方体 绕坐标轴旋转
-      cube.rotation.y += 0.01;
+      // 让球绕坐标轴旋转
+      sphere.rotation.y += 0.01;
+      if (parseInt(cube.position.y, 10) === number) {
+        number = -number;
+        step = -step;
+      }
+      cube.position.y += step;
       // 开始渲染
       webGLRenderer.render(scene, camera);
     }
@@ -99,6 +106,19 @@ class ThreeJsDemo extends PureComponent {
     function animate() {
       render();
       requestAnimationFrame(animate);
+    }
+
+    // 添加window 的resize事件监听
+    window.addEventListener('resize', onWindowResize);
+
+    // 浏览器窗口变动触发的方法
+    function onWindowResize() {
+      // 重新设置相机宽高比例
+      camera.aspect = threeDom.clientWidth / threeDom.clientHeight;
+      // 更新相机投影矩阵
+      camera.updateProjectionMatrix();
+      // 重新设置渲染器渲染范围
+      webGLRenderer.setSize(threeDom.clientWidth, threeDom.clientHeight);
     }
     animate();
   }
